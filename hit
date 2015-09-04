@@ -1,0 +1,175 @@
+#!/bin/bash
+# Runs the test scripts given as argument,
+# otherwise those in the current directory.
+# Report the test results.
+# Return an error code > 0 if any test case fails.
+
+readonly HIT_ARG_ASSERTIONS="-a"
+readonly HIT_ARG_ASSERTIONS_LONG="--assertions"
+readonly HIT_ARG_DATA="-d"
+readonly HIT_ARG_DATA_LONG="--data"
+readonly HIT_ARG_DRY_RUN="-D"
+readonly HIT_ARG_DRY_RUN_LONG="--dry-run"
+readonly HIT_ARG_HELP="-h"
+readonly HIT_ARG_HELP_LONG="--help"
+readonly HIT_ARG_PRODUCTION="-p"
+readonly HIT_ARG_PRODUCTION_LONG="--production"
+readonly HIT_ARG_QUIET="-q"
+readonly HIT_ARG_QUIET_LONG="--quiet"
+readonly HIT_ARG_REGRESSION="-r"
+readonly HIT_ARG_REGRESSION_LONG="--regression"
+readonly HIT_ARG_SELF_TEST="-s"
+readonly HIT_ARG_SELF_TEST_LONG="--selftest"
+readonly HIT_ARG_TRACE="-t"
+readonly HIT_ARG_TRACE_LONG="--trace"
+readonly HIT_ARG_URL="-u"
+readonly HIT_ARG_URL_LONG="--url"
+readonly HIT_ARG_WAIT="-w"
+readonly HIT_ARG_WAIT_LONG="--wait"
+readonly TEST_CASE_FILES="test-*.sh"
+
+optSleepInSec=0.2
+
+usage() {
+    local readonly thisScript=$(basename $0)
+
+    echo -e "Runs the TEST scripts given as argument, otherwise the $TEST_CASE_FILES files in the current directory.
+
+Usage: $thisScript [ ARGS ] \
+[ [ $HIT_ARG_DATA FILE ] TEST ... ]
+
+ARGS:
+
+  $HIT_ARG_ASSERTIONS, $HIT_ARG_ASSERTIONS_LONG
+\tReports the number of assertions instead of tests (ok/failed/skipped)
+  $HIT_ARG_DRY_RUN, $HIT_ARG_DRY_RUN_LONG
+\tReports all test suites, tests cases and URLs that would be run
+  $HIT_ARG_HELP, $HIT_ARG_HELP_LONG
+\tShows help for command-line arguments (usage)
+  $HIT_ARG_PRODUCTION, $HIT_ARG_PRODUCTION_LONG
+\tTests only against the production environment (skip regression)
+  $HIT_ARG_QUIET, $HIT_ARG_QUIET_LONG
+\tQuiet mode, does not show the progress with dots (...)
+  $HIT_ARG_REGRESSION, $HIT_ARG_REGRESSION_LONG
+\tRuns regression tests only against non-production environments (skip production)
+  $HIT_ARG_SELF_TEST, $HIT_ARG_SELF_TEST_LONG
+\tRuns the self-test, to verify that the HIT framework works
+  $HIT_ARG_TRACE, $HIT_ARG_TRACE_LONG
+\tTraces errors, by printing the HTTP response headers of failed assertions
+  $HIT_ARG_URL URL, $HIT_ARG_URL_LONG URL
+\tTests only the URLs that match the given URL pattern (substring, regular expression)
+  $HIT_ARG_WAIT SEC, $HIT_ARG_WAIT_LONG SEC
+\tWait time in seconds, used by the doSleep function (default $optSleepInSec)
+  $HIT_ARG_DATA FILE, $HIT_ARG_DATA_LONG FILE
+\tGives the test data from the file named FILE to the following TEST script
+  TEST\tTest script
+
+Do not use the HTTP proxy; e.g., when running in the public Internet:
+
+http_proxy= $thisScript" 1>&2
+    exit 2
+}
+
+main() {
+    local reportResults=reportTests
+    local optUrl=
+    local optWait=
+
+    for arg in $@; do
+        case "$arg" in
+            $HIT_ARG_ASSERTIONS | $HIT_ARG_ASSERTIONS_LONG)
+                reportResults=reportAssertions
+                ;;
+            $HIT_ARG_DATA | $HIT_ARG_DATA_LONG)
+                break
+                ;;
+            $HIT_ARG_DRY_RUN | $HIT_ARG_DRY_RUN_LONG)
+                optDebugMode=1
+                optDryRunMode=1
+                optQuietMode=1
+                ;;
+            $HIT_ARG_HELP | $HIT_ARG_HELP_LONG)
+                usage
+                ;;
+            $HIT_ARG_PRODUCTION | $HIT_ARG_PRODUCTION_LONG)
+                optProductionMode=1
+                ;;
+            $HIT_ARG_QUIET | $HIT_ARG_QUIET_LONG)
+                optQuietMode=1
+                ;;
+            $HIT_ARG_REGRESSION | $HIT_ARG_REGRESSION_LONG)
+                optRegressionMode=1
+                ;;
+            $HIT_ARG_SELF_TEST | $HIT_ARG_SELF_TEST_LONG)
+                optSelfTest=1
+                ;;
+            $HIT_ARG_TRACE | $HIT_ARG_TRACE_LONG)
+                optTrace=1
+                ;;
+            $HIT_ARG_URL | $HIT_ARG_URL_LONG)
+                optUrl=1
+                ;;
+            $HIT_ARG_WAIT | $HIT_ARG_WAIT_LONG)
+                optWait=1
+                ;;
+            *)
+                if [ -n "$optUrl" ]; then
+                    optIncludeUrl="$arg"
+                    optUrl=
+                elif [ -n "$optWait" ]; then
+                    optSleepInSec="$arg"
+                    optWait=
+                elif [[ ${arg:0:1} == "-" ]]; then
+                    echo -e "ERROR: Unknown argument: $arg\n"
+                    usage
+                else
+                    break
+                fi
+                ;;
+        esac
+        shift
+    done
+
+    if [ -n "$optUrl" ]; then
+        echo -e "ERROR: Give the URL after the argument $HIT_ARG_URL ($HIT_ARG_URL_LONG)\n"
+        usage
+    fi
+
+    if [ -n "$optWait" ]; then
+        echo -e "ERROR: Give the wait time in seconds after the argument $HIT_ARG_WAIT ($HIT_ARG_WAIT_LONG)\n"
+        usage
+    fi
+
+    # the HIT path must be accessible
+    readonly hitPath=$(echo $0 | sed "s/\/[^/]*$//")
+    PATH=$PATH:$hitPath
+
+    includeHit
+
+    local testScripts=$@
+    if [ -z "$testScripts" ]; then
+        testScripts="$TEST_CASE_FILES"
+    fi
+
+    if [ -n "$optSelfTest" ]; then
+        cd "$hitPath/tests"
+    fi
+
+    runScripts "$testScripts"
+    reportTime
+    $reportResults
+}
+
+includeHit() {
+    source bunit-runner.sh
+    source bunit-assert.sh
+
+    source http-const.sh
+    source http-util.sh
+    source http-assert.sh
+    source http-assert-body.sh
+    source http-assert-headers.sh
+    source http-request.sh
+}
+
+main "$@"
