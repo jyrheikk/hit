@@ -1,5 +1,5 @@
 #!/bin/bash
-# Test the API doc generation.
+# Test the API doc generation in HTML.
 
 setUpBeforeClass() {
     runHitTool create-api-doc.sh

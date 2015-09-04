@@ -97,9 +97,9 @@ Before running `hit`, set the following environment variables in the
 Verify that HIT works, by running the self-test:
 
     $ hit -s
-    ...............................................................................................
+    ..................................................................................................
     Time: 1 s
-    OK (95 tests)
+    OK (98 tests)
 
 ## Running test cases
 
