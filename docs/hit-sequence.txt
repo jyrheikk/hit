@@ -1,0 +1,19 @@
+title HTTP Integration Tester
+
+HIT->TestClass: setUpBeforeClass
+opt get parameters for test cases
+    HIT->TestClass: read paramTest
+    TestClass-->HIT: filename or array
+    HIT->HIT: read lines or array elements
+end
+loop run test cases
+    HIT->TestClass: setUp
+    HIT->TestClass: test* [parameter]
+    TestClass->TestClass: set* request headers
+    TestClass->Server: request
+    Server-->TestClass: response
+    TestClass->TestClass: assert* response headers
+    HIT->TestClass: tearDown
+end
+HIT->TestClass: tearDownAfterClass
+HIT->HIT: report
