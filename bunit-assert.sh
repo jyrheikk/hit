@@ -5,12 +5,12 @@ shopt -s nocasematch
 
 ## Basic assertions
 
-# Verify that the given expression returns 1 (parameter 2: optional error message)
+# Verify that the given expression returns 1
 assertTrue() {
     assertEquals 1 "$1" "$2"
 }
 
-# Verify that the given values match (parameter 1: expected value, parameter 2: tested value, 3: optional error message)
+# Verify that the given values match (parameter 1: expected value, parameter 2: tested value)
 assertEquals() {
     local readonly expected="$1"
     local readonly value="$2"
@@ -23,7 +23,7 @@ assertEquals() {
     fi
 }
 
-# Verify that the given haystack value contains the given needle value (parameter 1: haystack, parameter 2: needle, 3: optional error message)
+# Verify that the given haystack value contains the given needle value (parameter 1: haystack, parameter 2: needle)
 assertContains() {
     assertEquals "$2" "$1" "$3" "*"
 }

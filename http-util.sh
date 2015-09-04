@@ -15,12 +15,12 @@ parseField() {
     cut $ARG -d"$3" -f"$2" <<< "$1"
 }
 
-# @param URL including the protocol (e.g., http://www.mydomain.com/)
+# @param URL including the protocol (e.g., https://github.com/)
 getHostOfUrl() {
     echo "$1" | cut -d/ -f3 | cut -d: -f1
 }
 
-# @param URL including the protocol (e.g., http://www.mydomain.com/path/)
+# @param URL including the protocol (e.g., https://github.com/jyrheikk/hit/)
 getProtocolAndHostOfUrl() {
     echo "$1" | cut -d/ -f-3
 }
@@ -61,7 +61,7 @@ isNotInteger() {
     [[ "${#input}" == 0 || "$input" == *[!0-9]* ]] && echo 1
 }
 
-## Utilities for parsing redirect rules of format: <source>,<destination>[,<source-status>[,<destination-status>]]
+## Utilities for parsing CSV-formatted redirect rules
 # <source> may be relative URL
 # <destination> must be an absolute URL
 # <source-status> for the response of <source> if it's not 301

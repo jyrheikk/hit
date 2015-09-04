@@ -1,8 +1,9 @@
 #!/bin/bash
 # Syntactic sugar for HTTP response assert methods.
 
-## Verify HTTP response headers (parameter 1: expected value as a substring, which may end with the regular expression end-of-line "$", parameter 2: optional error message)
+## Verify HTTP response headers
 
+# @param expected value as a substring, which may end with the regular expression end-of-line "$"
 assertAge() { assertHeader "$RESP_AGE" "$1" "$2"; }
 assertCacheControl() { assertHeader "$RESP_CACHE_CONTROL" "$1" "$2"; }
 assertContentEncoding() { assertHeader "$RESP_CONTENT_ENCODING" "$1" "$2"; }
@@ -21,12 +22,12 @@ assertXTrueCacheKey() { assertHeader "$RESP_X_TRUE_CACHE_KEY" "$1" "$2"; }
 assertXVarnish() { assertHeader "$RESP_X_VARNISH" "$1" "$2"; }
 assertXVarnishCache() { assertHeader "$RESP_X_VARNISH_CACHE" "$1" "$2"; }
 
-# Verify a non-standard header (parameters: header, expected-value, optional message)
+# Verify a non-standard header (parameters: header, expected-value)
 assertHeader() {
     _verifyHeader "$1:" "$2" "$3"
 }
 
-## Verify Cache-Control response header (parameter: optional error message)
+## Verify Cache-Control response header
 
 assertNotCacheable() { assertCacheControl "($NO_CACHE|$NO_STORE|$PRIVATE)" "$1"; }
 assertCacheControlNoCache() { assertCacheControl "$NO_CACHE" "$1"; }
@@ -34,7 +35,7 @@ assertCacheControlNoStore() { assertCacheControl "$NO_STORE" "$1"; }
 assertCacheControlPrivate() { assertCacheControl "$PRIVATE" "$1"; }
 assertCacheControlPublic() { assertCacheControl "$PUBLIC" "$1"; }
 
-## Verify Content-Type response header (parameter 1: optional error message)
+## Verify Content-Type response header
 
 assertType3gp() { assertContentType "$CONTENT_TYPE_3GP" "$1"; }
 assertTypeAvi() { assertContentType "$CONTENT_TYPE_AVI" "$1"; }
@@ -129,7 +130,7 @@ assertCompressed() {
 # Verify that Varnish is used (X-Varnish-Cache: HIT or MISS)
 assertVarnishUsed() { assertXVarnishCache "($HIT|$MISS)" "$1"; }
 
-## Verify HTTP status code (parameter: optional error message)
+## Verify HTTP status code
 
 # Verify that the status code is 200
 assertStatusOk() { _verifyStatus "$statusOk" "$1"; }
