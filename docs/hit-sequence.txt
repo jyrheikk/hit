@@ -10,8 +10,8 @@ loop run test cases
     HIT->TestClass: setUp
     HIT->TestClass: test* [parameter]
     TestClass->TestClass: set* request headers
-    TestClass->Server: request
-    Server-->TestClass: response
+    TestClass->Web: request
+    Web-->TestClass: response
     TestClass->TestClass: assert* response headers
     HIT->TestClass: tearDown
 end

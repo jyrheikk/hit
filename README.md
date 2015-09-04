@@ -2,10 +2,10 @@
 
 HIT is a testing framework that
 
-* Enables writing **compact and readable, yet powerful test cases**.
-* **Verifies architectural properties (availability, performance,
-security) of a web system**.
-* Was implemented in the spirit of xUnit test frameworks.
+* Enables writing **compact and readable**, yet powerful **test cases**.
+* **Verifies architectural properties** (availability, performance,
+security) of a **web system**.
+* Is implemented in Bash, in the spirit of xUnit test frameworks.
 
 HIT
 
@@ -16,8 +16,8 @@ HIT
 
 ## Features
 
-| HIT verifies | By checking HTTP | Examples |
-| ------------ | ---------------- | -------- |
+| HIT verifies | Checking HTTP | Examples |
+| ------------ | ------------- | -------- |
 | Availability, system integration | Status code | Expect 200 (OK), or 301/302 (Moved) from HTTP redirects |
 | Performance | Response headers | Cacheability (`Cache-Control`), compressed body (`Content-Encoding`) |
 | Security | Response headers | Clickjacking disallowed (`X-Frame-Options`), server version number not revealed (`Server`) |
