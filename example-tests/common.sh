@@ -1,0 +1,1 @@
+readonly testDataDir="testdata"
