@@ -57,6 +57,7 @@ the custom functions described above.
 
 ## Coding HIT tests
 
+* Read the [HIT API documentation](API.md).
 * Let the HIT framework run the show.
   * Do not call the `test`, `setUp` or `tearDown` functions explicitly.
 * Use assertions only in the `test` functions.

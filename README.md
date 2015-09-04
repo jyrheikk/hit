@@ -58,7 +58,7 @@ using the [source data](/docs/hit-sequence.txt).)
 
 ## Sample test case
 
-The test cases use the HIT API, which contains
+The test cases use the [HIT API](/docs/API.md), which contains
 
 * `set` functions for HTTP request headers.
 * `assert` functions for HTTP response headers and body.
