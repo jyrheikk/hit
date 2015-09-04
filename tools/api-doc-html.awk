@@ -1,17 +1,18 @@
 # Display the @param comment after the function name.
 # Sample input:
 #
-# <h2>Verify HTTP response headers</h2>
+# ## Verify HTTP response headers
 # setCacheControl
 # # @param username:password in plain text
 # setCredentials
 #
 # output:
 #
-# <h2>Verify HTTP response headers</h2>
+# </ul><h2>Verify HTTP response headers</h2>
+# <ul>
 # <li>setCacheControl</li>
 # <li>setCredentials
-# <br/># @param username:password in plain text</li>
+# <br/>Parameters: username:password in plain text</li>
 
 /^##/ {
     # gensub would be simpler, but is not supported as widely as gsub
