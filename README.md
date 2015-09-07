@@ -90,14 +90,14 @@ Clone the Git repository, and verify that you have the tools required by HIT:
 Before running `hit`, set the following environment variables in the
 `.bash_profile` file of your home directory:
 
-    export PATH="$PATH:/<git-root>/hit"
+    export PATH="$PATH:/<git-root>/hit/bin"
     # required if accessing servers outside the intranet
     export http_proxy=http://<my-proxy-domain>:<my-proxy-port>
 
 Verify that HIT works, by running the self-test:
 
     $ hit -s
-    ..................................................................................................
+    ...................................................................................
     Time: 1 s
     OK (98 tests)
 
@@ -110,7 +110,7 @@ See help for the command-line arguments:
 Without parameters, `hit` runs all the tests (named as `test-*.sh`) in
 the current directory. Run one test as follows:
 
-    $ cd tests
+    $ cd hit/tests
     $ hit test-gnu-tools.sh
 
 When testing outside the intranet, either unset the `http_proxy`

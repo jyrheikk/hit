@@ -152,7 +152,7 @@ main() {
     fi
 
     if [ -n "$optSelfTest" ]; then
-        cd "$hitPath/tests"
+        cd "$hitPath/../tests"
     fi
 
     runScripts "$testScripts"

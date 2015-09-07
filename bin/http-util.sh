@@ -137,7 +137,7 @@ _renameFunc() {
 
 # @param 1 template name (e.g., "test-redirects"), 2 test data array or filename
 useTemplate() {
-    source "$hitPath/templates/$1.sh"
+    source "$hitPath/../templates/$1.sh"
     paramTest="$2"
 }
 

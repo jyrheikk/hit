@@ -50,14 +50,14 @@ printFooterHtml() {
 }
 
 createContents() {
-    local readonly DIR=..
-    printFunctions "$1" $DIR/http-request-headers.sh \
-        $DIR/http-request.sh \
-        $DIR/http-assert-headers.sh \
-        $DIR/http-assert.sh \
-        $DIR/http-assert-body.sh \
-        $DIR/bunit-assert.sh \
-        $DIR/http-util.sh
+    local readonly HIT_DIR="../bin"
+    printFunctions "$1" $HIT_DIR/http-request-headers.sh \
+        $HIT_DIR/http-request.sh \
+        $HIT_DIR/http-assert-headers.sh \
+        $HIT_DIR/http-assert.sh \
+        $HIT_DIR/http-assert-body.sh \
+        $HIT_DIR/bunit-assert.sh \
+        $HIT_DIR/http-util.sh
 }
 
 printFunctions() {
