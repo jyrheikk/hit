@@ -120,3 +120,26 @@ environment variable, or disable it as follows:
 
 Read the [HIT coding guidelines](/docs/CODING.md) when you start
 developing your own HIT tests.
+
+## Test automation on Jenkins
+
+When your HIT tests are in a Git repository, they can be run
+automatically on a Jenkins continuous integration server as follows:
+
+1. Create a Jenkins job that is triggered to run based on your needs.
+  Examples:
+  * Periodically (say, once an hour).
+  * Whenever there are changes in your HIT tests.
+  * After your system has been deployed (**post-build action** /
+    _Build other projects_).
+1. Run the tests (**post-build step** / _Execute shell_):
+  * `cd my-hit-tests`
+  * `hit --trace --quiet`
+1. Verify that the `hit` command is available to your tests. Options:
+  * Install `hit` on some known location on Jenkins.
+  * Clone the HIT Git repository before running your tests.
+  * Use the absolute path for `hit` in _Execute shell_ command above.
+1. Get a mail notification for failed builds (**post-build action** /
+  _Email Notification_).
+
+If any test (assertion) fails, Jenkins claims the build as failed.
