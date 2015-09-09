@@ -6,12 +6,12 @@
 
 readonly HIT_ARG_ASSERTIONS="-a"
 readonly HIT_ARG_ASSERTIONS_LONG="--assertions"
-readonly HIT_ARG_DATA="-d"
-readonly HIT_ARG_DATA_LONG="--data"
-readonly HIT_ARG_DRY_RUN="-D"
+readonly HIT_ARG_DRY_RUN="-d"
 readonly HIT_ARG_DRY_RUN_LONG="--dry-run"
 readonly HIT_ARG_HELP="-h"
 readonly HIT_ARG_HELP_LONG="--help"
+readonly HIT_ARG_INPUT="-i"
+readonly HIT_ARG_INPUT_LONG="--input"
 readonly HIT_ARG_PRODUCTION="-p"
 readonly HIT_ARG_PRODUCTION_LONG="--production"
 readonly HIT_ARG_QUIET="-q"
@@ -36,7 +36,7 @@ usage() {
     echo -e "Runs the TEST scripts given as argument, otherwise the $TEST_CASE_FILES files in the current directory.
 
 Usage: $thisScript [ ARGS ] \
-[ [ $HIT_ARG_DATA FILE ] TEST ... ]
+[ [ $HIT_ARG_INPUT FILE ] TEST ... ]
 
 ARGS:
 
@@ -60,8 +60,8 @@ ARGS:
 \tTests only the URLs that match the given URL pattern (substring, regular expression)
   $HIT_ARG_WAIT SEC, $HIT_ARG_WAIT_LONG SEC
 \tWait time in seconds, used by the doSleep function (default $optSleepInSec)
-  $HIT_ARG_DATA FILE, $HIT_ARG_DATA_LONG FILE
-\tGives the test data from the file named FILE to the following TEST script
+  $HIT_ARG_INPUT FILE, $HIT_ARG_INPUT_LONG FILE
+\tGives the test data from the input file named FILE to the following TEST script
   TEST\tTest script
 
 Do not use the HTTP proxy; e.g., when running in the public Internet:
@@ -80,9 +80,6 @@ main() {
             $HIT_ARG_ASSERTIONS | $HIT_ARG_ASSERTIONS_LONG)
                 reportResults=reportAssertions
                 ;;
-            $HIT_ARG_DATA | $HIT_ARG_DATA_LONG)
-                break
-                ;;
             $HIT_ARG_DRY_RUN | $HIT_ARG_DRY_RUN_LONG)
                 optDebugMode=1
                 optDryRunMode=1
@@ -90,6 +87,9 @@ main() {
                 ;;
             $HIT_ARG_HELP | $HIT_ARG_HELP_LONG)
                 usage
+                ;;
+            $HIT_ARG_INPUT | $HIT_ARG_INPUT_LONG)
+                break
                 ;;
             $HIT_ARG_PRODUCTION | $HIT_ARG_PRODUCTION_LONG)
                 optProductionMode=1

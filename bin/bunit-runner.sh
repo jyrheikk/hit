@@ -24,7 +24,7 @@ runScripts() {
             doDebug "# $arg"
             runParameterizedTestCases "$paramFile"
             paramFile=
-        elif [[ "$arg" == "$HIT_ARG_DATA" || "$arg" == "$HIT_ARG_DATA_LONG" ]]; then
+        elif [[ "$arg" == "$HIT_ARG_INPUT" || "$arg" == "$HIT_ARG_INPUT_LONG" ]]; then
             isParamFile=1
             paramFile=
         else
