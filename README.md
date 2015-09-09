@@ -113,10 +113,7 @@ the current directory. Run one test as follows:
     $ cd hit/tests
     $ hit test-gnu-tools.sh
 
-When testing outside the intranet, either unset the `http_proxy`
-environment variable, or disable it as follows:
-
-    $ http_proxy= hit
+See the [`hit` manual page](/docs/MANUAL.md) for all the command-line arguments.
 
 Read the [HIT coding guidelines](/docs/CODING.md) when you start
 developing your own HIT tests.
