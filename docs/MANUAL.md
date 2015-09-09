@@ -31,6 +31,7 @@ The number of failed test cases. `0` means OK, all tests passed.
 
 ## Environment
 
-When the tests are run in the public Internet, disable the HTTP proxy environment variable as follows:
+When the tests are run in the public Internet, unset the `http_proxy`
+environment variable as follows:
 
     http_proxy= hit
