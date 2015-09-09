@@ -24,13 +24,13 @@ tearDownAfterClass() {
 
 testIsExecutable() {
     local readonly THIS_SCRIPT="test-bunit-runner.sh"
-    [ "$(isExecutable $THIS_SCRIPT)" ] || _failAssert $THIS_SCRIPT
+    [ "$(_isExecutable $THIS_SCRIPT)" ] || _failAssert $THIS_SCRIPT
     assertInTestCase
 }
 
 testIsNotExecutable() {
     local readonly TEST_FILE="$testDataDir/response-body.html"
-    isExecutable "$TEST_FILE" && _failAssert "$TEST_FILE"
+    _isExecutable "$TEST_FILE" && _failAssert "$TEST_FILE"
     assertInTestCase
 }
 

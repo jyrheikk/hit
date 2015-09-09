@@ -21,6 +21,6 @@ scriptContains() {
 
 assertRequestScriptRemoved() {
     [ ! -f "$req_config" ] && _failAssert "exists"
-    removeFile "$req_config"
+    _removeFile "$req_config"
     [ -f "$req_config" ] && _failAssert "removed"
 }

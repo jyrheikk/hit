@@ -21,7 +21,7 @@ httpGet() {
 
     if [ "$(_skipUrl "$url")" ]; then
         ok=
-        skipTest
+        _skipTest
     elif [ -z "$req_proxy" ]; then
         runFunc "customIsIntranetUrl" "$url"
         if [ $? -eq 0 ]; then
@@ -33,9 +33,9 @@ httpGet() {
     if [ -n "$optDryRunMode" ]; then
         if [ -n "$ok" ]; then
             ok=
-            skipTest
+            _skipTest
         fi
-        doDebug " $url"
+        _doDebug " $url"
     fi
 
     if [ -n "$ok" ]; then
@@ -52,8 +52,8 @@ httpGet() {
 
     _initRequest
 
-    addTmpFile "$req_responseHeaders"
-    addTmpFile "$req_responseBody"
+    _addTmpFile "$req_responseHeaders"
+    _addTmpFile "$req_responseBody"
 }
 
 _skipUrl() {
@@ -121,8 +121,8 @@ _doRequest() {
     if [ "$curlStatus" == "$CURL_TIMEOUT" ]; then
         skipAndWarn "curl timeout $defaultMaxTime s <$url>"
     else
-        verifyCurlReturnCode "$curlStatus" "$url"
+        _verifyCurlReturnCode "$curlStatus" "$url"
     fi
 
-    removeFile "$req_config"
+    _removeFile "$req_config"
 }

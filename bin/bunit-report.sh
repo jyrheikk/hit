@@ -3,20 +3,20 @@
 
 startTime=$(date +%s)
 
-doDebug() {
+_doDebug() {
     if [ -n "$optDebugMode" ]; then
         echo "$1"
     fi
 }
 
-updateTestCounts() {
+_updateTestCounts() {
     ((testCount++))
     case "$currTestFailed" in
         $TEST_FAILED)
-            reportResponse
+            _reportResponse
             ((failedTestCount++))
-            if [ -n "$(tooManyErrors)" ]; then
-                reportFailure "FATAL: too many errors"
+            if [ -n "$(_tooManyErrors)" ]; then
+                _reportFailure "FATAL: too many errors"
             fi
             ;;
         $TEST_SKIPPED)
@@ -25,7 +25,7 @@ updateTestCounts() {
     esac
 }
 
-reportResponse() {
+_reportResponse() {
     if [[ -n "$optTrace" && -n "$currentUrl" && -s "$req_responseHeaders" ]]; then
         echo "------------------------------------------------------------
 HTTP response headers of <$currentUrl>:
@@ -35,7 +35,7 @@ HTTP response headers of <$currentUrl>:
     fi
 }
 
-reportTime() {
+_reportTime() {
     # TODO: use milliseconds (date +%s%N) in Bash 4.X
     local readonly endTime=$(date +%s)
     local readonly timeDiff=$((endTime - startTime))
@@ -44,7 +44,7 @@ reportTime() {
     echo "Time: $timeDiff s"
 }
 
-reportProgress() {
+_reportProgress() {
     if [ -z "$optQuietMode" ]; then
         if [ -z "$1" ]; then
             echo -n ".";
@@ -54,38 +54,38 @@ reportProgress() {
     fi
 }
 
-reportFailure() {
+_reportFailure() {
     local status="$2"
     [ -z "$status" ] && status="E"
-    reportProgress "$status"
+    _reportProgress "$status"
     echo "$1" >&2
 }
 
-reportTests() {
+_reportTests() {
     if [ $failedTestCount -gt 0 ]; then
         if [ $skippedTestCount -gt 0 ]; then
             local readonly andSkipped=", Skipped: $skippedTestCount"
         fi
         echo "Tests run: $testCount, Failures: $failedTestCount$andSkipped"
     else
-        echo "OK ($testCount tests$(reportSkipped))"
+        echo "OK ($testCount tests$(_reportSkipped))"
     fi
     return $failedTestCount
 }
 
-reportAssertions() {
+_reportAssertions() {
     local readonly assertCount=$((assertOkCount + failedTestCount))
-    echo "$assertOkCount assertions of $assertCount passed, $failedTestCount failed$(reportSkipped)."
+    echo "$assertOkCount assertions of $assertCount passed, $failedTestCount failed$(_reportSkipped)."
     return $failedTestCount
 }
 
-reportSkipped() {
+_reportSkipped() {
     if [ $skippedTestCount -gt 0 ]; then
         echo ", $skippedTestCount skipped"
     fi
 }
 
-tooManyErrors() {
+_tooManyErrors() {
     local readonly MAX_ERRORS=10
     [[ $failedTestCount -ge $MAX_ERRORS ]] && echo 1
 }
@@ -95,15 +95,15 @@ tooManyErrors() {
 readonly TEST_FAILED=1
 readonly TEST_SKIPPED=2
 
-failTest() {
+_failTest() {
     currTestFailed="$TEST_FAILED"
 }
 
-skipTest() {
+_skipTest() {
     currTestFailed="$TEST_SKIPPED"
 }
 
-increaseAssertCount() {
+_increaseAssertCount() {
     ((assertOkCount++))
 }
 

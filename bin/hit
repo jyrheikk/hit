@@ -30,7 +30,7 @@ readonly TEST_CASE_FILES="test-*.sh"
 
 optSleepInSec=0.2
 
-usage() {
+_usage() {
     local readonly thisScript=$(basename $0)
 
     echo -e "Runs the TEST scripts given as argument, otherwise the $TEST_CASE_FILES files in the current directory.
@@ -71,14 +71,14 @@ http_proxy= $thisScript" 1>&2
 }
 
 main() {
-    local reportResults=reportTests
+    local reportResults="_reportTests"
     local optUrl=
     local optWait=
 
     for arg in $@; do
         case "$arg" in
             $HIT_ARG_ASSERTIONS | $HIT_ARG_ASSERTIONS_LONG)
-                reportResults=reportAssertions
+                reportResults="_reportAssertions"
                 ;;
             $HIT_ARG_DRY_RUN | $HIT_ARG_DRY_RUN_LONG)
                 optDebugMode=1
@@ -86,7 +86,7 @@ main() {
                 optQuietMode=1
                 ;;
             $HIT_ARG_HELP | $HIT_ARG_HELP_LONG)
-                usage
+                _usage
                 ;;
             $HIT_ARG_INPUT | $HIT_ARG_INPUT_LONG)
                 break
@@ -121,7 +121,7 @@ main() {
                     optWait=
                 elif [[ ${arg:0:1} == "-" ]]; then
                     echo -e "ERROR: Unknown argument: $arg\n"
-                    usage
+                    _usage
                 else
                     break
                 fi
@@ -132,19 +132,19 @@ main() {
 
     if [ -n "$optUrl" ]; then
         echo -e "ERROR: Give the URL after the argument $HIT_ARG_URL ($HIT_ARG_URL_LONG)\n"
-        usage
+        _usage
     fi
 
     if [ -n "$optWait" ]; then
         echo -e "ERROR: Give the wait time in seconds after the argument $HIT_ARG_WAIT ($HIT_ARG_WAIT_LONG)\n"
-        usage
+        _usage
     fi
 
     # the HIT path must be accessible
     readonly hitPath=$(echo $0 | sed "s/\/[^/]*$//")
     PATH=$PATH:$hitPath
 
-    includeHit
+    _includeHit
 
     local testScripts=$@
     if [ -z "$testScripts" ]; then
@@ -155,12 +155,12 @@ main() {
         cd "$hitPath/../tests"
     fi
 
-    runScripts "$testScripts"
-    reportTime
+    _runScripts "$testScripts"
+    _reportTime
     $reportResults
 }
 
-includeHit() {
+_includeHit() {
     source bunit-runner.sh
     source bunit-assert.sh
 
@@ -170,6 +170,7 @@ includeHit() {
     source http-assert-body.sh
     source http-assert-headers.sh
     source http-request.sh
+    source readonly-functions.sh
 }
 
 main "$@"

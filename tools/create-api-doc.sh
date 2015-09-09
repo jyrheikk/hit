@@ -51,7 +51,9 @@ printFooterHtml() {
 
 createContents() {
     local readonly HIT_DIR="../bin"
-    printFunctions "$1" $HIT_DIR/http-request-headers.sh \
+
+    printFunctions "$1" \
+        $HIT_DIR/http-request-headers.sh \
         $HIT_DIR/http-request.sh \
         $HIT_DIR/http-assert-headers.sh \
         $HIT_DIR/http-assert.sh \

@@ -15,15 +15,15 @@ readonly CURL_CONNECTION_RESET_BY_PEER=56
 readonly CURL_SSL_CACERT=60
 
 # @param CURL_ constant
-expectCurlError() {
+_expectCurlError() {
     curlError="$1"
 }
 
-expectCurlOk() {
-    expectCurlError "$CURL_OK"
+_expectCurlOk() {
+    _expectCurlError "$CURL_OK"
 }
 
-verifyCurlReturnCode() {
+_verifyCurlReturnCode() {
     local message=
 	case "$1" in
         $CURL_OK)

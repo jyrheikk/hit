@@ -24,7 +24,7 @@ _initRequest() {
     setUserAgent ""
     setXForwardedFor ""
 
-    expectCurlOk
+    _expectCurlOk
 }
 
 ## Set HTTP request headers

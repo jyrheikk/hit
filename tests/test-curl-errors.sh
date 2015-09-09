@@ -7,13 +7,13 @@ testCurlInstalled() {
 }
 
 testUnsupportedProtocol() {
-    expectCurlError "$CURL_UNSUPPORTED_PROTOCOL"
+    _expectCurlError "$CURL_UNSUPPORTED_PROTOCOL"
     httpGet "htttp://test.com/"
 }
 
 # ignored because this may dramatically slow down the self-tests
 IGNOREDtestUnresolvedProxy() {
     setProxy "http://unresolvedhost/"
-    expectCurlError "$CURL_PROXY_NOT_RESOLVED"
+    _expectCurlError "$CURL_PROXY_NOT_RESOLVED"
     httpGet "http://test.com/"
 }

@@ -15,7 +15,7 @@ runHitTool() {
     cd "$TESTS_DIR"
 
     setTestResponseBody "$DOC"
-    removeFile "$DOC"
+    _removeFile "$DOC"
 }
 
 setTestResponseBody() {
@@ -27,7 +27,7 @@ setTestResponseBody() {
 }
 
 removeTestResponseBody() {
-    removeFile "$req_responseBody"
+    _removeFile "$req_responseBody"
 }
 
 setTestResponseHeaders() {
@@ -35,5 +35,5 @@ setTestResponseHeaders() {
 }
 
 removeTestResponseHeaders() {
-    removeFile "$req_responseHeaders"
+    _removeFile "$req_responseHeaders"
 }

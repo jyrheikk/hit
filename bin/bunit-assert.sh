@@ -50,7 +50,7 @@ assertDefined() {
 # Skip the test with the given warning message
 skipAndWarn() {
     _reportMessage "Warning" "$1" "W"
-    skipTest
+    _skipTest
 }
 
 _failAssertExpected() {
@@ -61,21 +61,21 @@ _failAssert() {
     if [ -z "$assertShouldFail" ]; then
         if [ -z "$currTestFailed" ]; then
             _reportMessage "Assert failed" "$1"
-            failTest
+            _failTest
         fi
     else
-        increaseAssertCount
+        _increaseAssertCount
         assertShouldFail=
     fi
 }
 
 _okAssert() {
     if [ -z "$assertShouldFail" ]; then
-        increaseAssertCount
+        _increaseAssertCount
     else
         if [ -z "$currTestFailed" ]; then
             _reportMessage "Expectation failed" "Assert should have failed"
-            failTest
+            _failTest
         fi
         assertShouldFail=
     fi

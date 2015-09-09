@@ -5,125 +5,125 @@ source bunit-report.sh
 
 declare -a tmpFiles=()
 
-runScripts() {
+_runScripts() {
     local paramFile=
     local isParamFile=
 
-    includeTestSuiteCommon
+    _includeTestSuiteCommon
 
     for arg in $1; do
-        if [ -n "$(tooManyErrors)" ]; then
+        if [ -n "$(_tooManyErrors)" ]; then
             break
         fi
 
         if [ -n "$isParamFile" ]; then
             isParamFile=
             paramFile=$arg
-        elif [ "$(isExecutable "$arg")" ]; then
+        elif [ "$(_isExecutable "$arg")" ]; then
             source "$arg"
-            doDebug "# $arg"
-            runParameterizedTestCases "$paramFile"
+            _doDebug "# $arg"
+            _runParameterizedTestCases "$paramFile"
             paramFile=
         elif [[ "$arg" == "$HIT_ARG_INPUT" || "$arg" == "$HIT_ARG_INPUT_LONG" ]]; then
             isParamFile=1
             paramFile=
         else
-            paramFile="$(getParamFile "$arg")"
+            paramFile="$(_getParamFile "$arg")"
         fi
     done
 }
 
-includeTestSuiteCommon() {
+_includeTestSuiteCommon() {
     local readonly commonFiles="common*.sh"
 
     for filename in $commonFiles; do
-        if [ "$(isExecutable "$filename")" ]; then
+        if [ "$(_isExecutable "$filename")" ]; then
             source "$filename"
         fi
     done
 }
 
-getParamFile() {
+_getParamFile() {
     local readonly script=$1
     local readonly PARAM_FILE_PREFIX="@"
 
     if [[ "$script" == "$PARAM_FILE_PREFIX"* ]]; then
         local readonly paramFile="${script:${#PARAM_FILE_PREFIX}}"
-        [ ! -f "$paramFile" ] && reportFailure "File doesn't exist: $paramFile"
+        [ ! -f "$paramFile" ] && _reportFailure "File doesn't exist: $paramFile"
         echo "$paramFile"
     else
-        reportFailure "Not executable script: $script"
+        _reportFailure "Not executable script: $script"
     fi
 }
 
-runParameterizedTestCases() {
+_runParameterizedTestCases() {
     trap removeTmpFiles SIGHUP SIGINT SIGPIPE SIGTERM
     allTestCases=($(compgen -A function "$TEST_CASE_PREFIX"))
 
     runFunc setUpBeforeClass
 
     if [ -f "$1" ]; then
-        runWithParamFile "$1"
-    elif [ "$(isParamTestArray)" ]; then
-        runWithParamArray
+        _runWithParamFile "$1"
+    elif [ "$(_isParamTestArray)" ]; then
+        _runWithParamArray
     elif [ -n "$paramTest" ]; then
         for dataFile in $paramTest; do
-            runWithParamFile "$dataFile"
+            _runWithParamFile "$dataFile"
         done
     else
-        runTestCases
+        _runTestCases
     fi
 
     runFunc tearDownAfterClass
 
-    unsetTestCases
+    _unsetTestCases
 }
 
-isParamTestArray() {
+_isParamTestArray() {
     declare -p paramTest 2> /dev/null | grep -q 'declare \-a' && echo 1
 }
 
-runWithParamFile() {
+_runWithParamFile() {
     while read -r line; do
-        line="$(echo "$line" | excludeCommentEmptyLines)"
+        line="$(echo "$line" | _excludeCommentEmptyLines)"
         if [ -n "$line" ]; then
-            runTestCases "$line"
+            _runTestCases "$line"
         fi
     done < "$1"
 }
 
-excludeCommentEmptyLines() {
+_excludeCommentEmptyLines() {
     egrep -v "^ *(#|\$)"
 }
 
-runWithParamArray() {
+_runWithParamArray() {
     for data in "${paramTest[@]}"; do
-        runTestCases "$data"
+        _runTestCases "$data"
     done
 }
 
-runTestCases() {
+_runTestCases() {
     for testCase in "${allTestCases[@]}"; do
-        if [ -n "$(tooManyErrors)" ]; then
+        if [ -n "$(_tooManyErrors)" ]; then
             break
         fi
-        runTest "$testCase" "$1"
+        _runTest "$testCase" "$1"
     done
 }
 
-runTest() {
-    reportProgress
+_runTest() {
+    _reportProgress
     runFunc setUp
     currTestFailed=
-    doDebug "- $1"
+    _doDebug "- $1"
     $1 "$2"
-    updateTestCounts
+    _updateTestCounts
     runFunc tearDown
-    removeTmpFiles
+    _removeTmpFiles
     _setCurrentUrl ""
 }
 
-unsetTestCases() {
+_unsetTestCases() {
     unset -v paramTest
     unset -f setUpBeforeClass setUp tearDown tearDownAfterClass
 
@@ -134,24 +134,24 @@ unsetTestCases() {
 
 # utilities for handling functions and files
 
-isExecutable() {
+_isExecutable() {
     [ -f "$1" -a -x "$1" ] && echo 1
 }
 
-removeTmpFiles() {
+_removeTmpFiles() {
     for filename in "${tmpFiles[@]}"; do
-        removeFile "$filename"
+        _removeFile "$filename"
     done
     unset tmpFiles
     declare -a tmpFiles=()
 }
 
-removeFile() {
+_removeFile() {
     local readonly filename="$1"
     [[ -n "$filename" ]] && [[ -e "$filename" ]] && rm -f "$filename"
 }
 
-addTmpFile() {
+_addTmpFile() {
     arrayContains "$1" "${tmpFiles[@]}"
     if [ $? -ne 0 ]; then
         tmpFiles=("${tmpFiles[@]}" "$1")
