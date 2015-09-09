@@ -38,8 +38,9 @@ The last argument of the assert functions is an optional error message.
 * `httpOptions`
 
 ## Verify HTTP response headers
-* `assertAge`
+* `assertAccessControlAllowOrigin`
   * Parameters: expected value as a substring, which may end with the regular expression end-of-line "$"
+* `assertAge`
 * `assertCacheControl`
 * `assertContentEncoding`
 * `assertContentLength`
@@ -91,6 +92,8 @@ The last argument of the assert functions is an optional error message.
   * Parameters: file type (css, gif, js, json, png, txt, xml), default is "html"
 * `assertNoClickjacking`
   * Verify that clickjacking is not allowed (X-Frame-Options: SAMEORIGIN)
+* `assertCorsEnabled`
+  * Verify that Cross Origin Resource Sharing (CORS) is enabled
 * `assertCompressed`
   * Verify that the response is compressed (Accept-Encoding and Vary headers)
 * `assertVarnishUsed`
