@@ -4,6 +4,7 @@
 ## Verify HTTP response headers
 
 # @param expected value as a substring, which may end with the regular expression end-of-line "$"
+assertAccessControlAllowOrigin() { assertHeader "$RESP_ACCESS_CONTROL_ALLOW_ORIGIN" "$1" "$2"; }
 assertAge() { assertHeader "$RESP_AGE" "$1" "$2"; }
 assertCacheControl() { assertHeader "$RESP_CACHE_CONTROL" "$1" "$2"; }
 assertContentEncoding() { assertHeader "$RESP_CONTENT_ENCODING" "$1" "$2"; }
@@ -120,6 +121,9 @@ assertContentTypeExpected() {
 
 # Verify that clickjacking is not allowed (X-Frame-Options: SAMEORIGIN)
 assertNoClickjacking() { assertXFrameOptions "($DENY|$SAMEORIGIN)" "$1"; }
+
+# Verify that Cross Origin Resource Sharing (CORS) is enabled
+assertCorsEnabled() { assertAccessControlAllowOrigin "\*" "$1"; }
 
 # Verify that the response is compressed (Accept-Encoding and Vary headers)
 assertCompressed() {

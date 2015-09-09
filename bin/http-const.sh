@@ -2,6 +2,7 @@
 # HTTP constants.
 
 # HTTP response headers
+readonly RESP_ACCESS_CONTROL_ALLOW_ORIGIN="Access-Control-Allow-Origin"
 readonly RESP_AGE="Age"
 readonly RESP_CACHE_CONTROL="Cache-Control"
 readonly RESP_CONTENT_ENCODING="Content-Encoding"
