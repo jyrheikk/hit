@@ -6,12 +6,13 @@ source bunit-report.sh
 declare -a tmpFiles=()
 
 _runScripts() {
+    local readonly testScripts=("${@}")
     local paramFile=
     local isParamFile=
 
     _includeTestSuiteCommon
 
-    for arg in $1; do
+    for arg in ${testScripts[@]}; do
         if [ -n "$(_tooManyErrors)" ]; then
             break
         fi

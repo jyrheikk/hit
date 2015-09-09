@@ -71,9 +71,11 @@ http_proxy= $thisScript" 1>&2
 }
 
 main() {
+    declare -a testScripts=()
     local reportResults="_reportTests"
     local optUrl=
     local optWait=
+    local waitingInputFile=
 
     for arg in $@; do
         case "$arg" in
@@ -89,7 +91,8 @@ main() {
                 _usage
                 ;;
             $HIT_ARG_INPUT | $HIT_ARG_INPUT_LONG)
-                break
+                waitingInputFile=1
+                testScripts=("${testScripts[@]}" "$arg")
                 ;;
             $HIT_ARG_PRODUCTION | $HIT_ARG_PRODUCTION_LONG)
                 optProductionMode=1
@@ -123,7 +126,10 @@ main() {
                     echo -e "ERROR: Unknown argument: $arg\n"
                     _usage
                 else
-                    break
+                    if [ -n "$waitingInputFile" ]; then
+                        waitingInputFile=
+                    fi
+                    testScripts=("${testScripts[@]}" "$arg")
                 fi
                 ;;
         esac
@@ -131,12 +137,16 @@ main() {
     done
 
     if [ -n "$optUrl" ]; then
-        echo -e "ERROR: Give the URL after the argument $HIT_ARG_URL ($HIT_ARG_URL_LONG)\n"
+        echo -e "ERROR: Give the URL after the argument $HIT_ARG_URL \
+($HIT_ARG_URL_LONG)\n"
         _usage
-    fi
-
-    if [ -n "$optWait" ]; then
-        echo -e "ERROR: Give the wait time in seconds after the argument $HIT_ARG_WAIT ($HIT_ARG_WAIT_LONG)\n"
+    elif [ -n "$optWait" ]; then
+        echo -e "ERROR: Give the wait time in seconds after the argument \
+$HIT_ARG_WAIT ($HIT_ARG_WAIT_LONG)\n"
+        _usage
+    elif [ -n "$waitingInputFile" ]; then
+        echo -e "ERROR: Give the name of the test data input file after the \
+argument $HIT_ARG_INPUT ($HIT_ARG_INPUT_LONG)\n"
         _usage
     fi
 
@@ -146,16 +156,16 @@ main() {
 
     _includeHit
 
-    local testScripts=$@
     if [ -z "$testScripts" ]; then
         testScripts="$TEST_CASE_FILES"
     fi
 
     if [ -n "$optSelfTest" ]; then
-        cd "$hitPath/../tests"
+        local readonly selfTestDir="$hitPath/../tests"
+        cd "$selfTestDir"
     fi
 
-    _runScripts "$testScripts"
+    _runScripts "${testScripts[@]}"
     _reportTime
     $reportResults
 }
