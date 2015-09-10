@@ -99,7 +99,7 @@ Verify that HIT works, by running the self-test:
     $ hit -s
     ...................................................................................
     Time: 1 s
-    OK (98 tests)
+    OK (101 tests)
 
 ## Running test cases
 
