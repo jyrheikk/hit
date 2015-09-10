@@ -1,13 +1,29 @@
 #!/bin/bash
-# Test HIT test class templates.
+# Test the HIT test class templates.
 
-useTemplate "test-integrations" "$testDataDir/integrations-empty.csv"
-
-setUpBeforeClass() {
-    local readonly EXISTING="testUrl"
-    isFunction $EXISTING || _failAssert "$EXISTING not defined"
+testIFramesTemplate() {
+    verifyTemplateDryRunOutput "iframes" "testMainPageContent" "testIFrameContent"
 }
 
-test() {
-    _failAssert "not called without input test data"
+testIntegrationsTemplate() {
+    verifyTemplateDryRunOutput "integrations" "testUrl"
+}
+
+testRedirectsTemplate() {
+    verifyTemplateDryRunOutput "redirects" "testSource" "testDestination"
+}
+
+verifyTemplateDryRunOutput() {
+    local readonly template="$1"
+    local readonly testUrl="http://test.com/"
+
+    local readonly output="$(hit --dry-run dry-run-template-$template.sh)"
+    local readonly urlFound="$(echo "$output" | egrep -c "$testUrl")"
+    assertTrue "$urlFound" "test URL of template-$template found"
+    shift
+
+    for functionName in $@; do 
+        local readonly functionFound="$(echo "$output" | egrep -c "$functionName")"
+        assertTrue "$functionFound" "test function $functionName of the template-$template found"
+    done
 }

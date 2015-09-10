@@ -88,7 +88,7 @@ _expectAssertFailure() {
 _reportMessage() {
     local readonly details="$(_reportCallerDetails "$TEST_CASE_PREFIX")"
     local readonly message="$1 in $details: $2"
-    reportFailure "$message" "$3"
+    _reportFailure "$message" "$3"
 }
 
 _reportCallerDetails() {

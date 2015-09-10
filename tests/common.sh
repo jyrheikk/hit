@@ -1,6 +1,7 @@
 #!/bin/bash
 
 readonly testDataDir="testdata"
+readonly templateData="$testDataDir/dry-run-template.csv"
 
 runHitTool() {
     local readonly SCRIPT="$1"
