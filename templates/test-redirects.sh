@@ -1,7 +1,7 @@
 #!/bin/bash
 # Template for redirect test classes.
 
-testSource() {
+testSource_() {
     local readonly sourceUrl=$(getSourceUrl "$1")
     local readonly destination=$(getDestinationUrl "$1")
 
@@ -21,7 +21,7 @@ testSource() {
     doSleep
 }
 
-testDestination() {
+testDestination_() {
     local readonly destination=$(getDestinationUrl "$1")
     if [ -z "$destination" ]; then
         return

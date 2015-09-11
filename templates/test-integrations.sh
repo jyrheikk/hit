@@ -1,7 +1,7 @@
 #!/bin/bash
 # Template for integration test classes.
 
-testUrl() {
+testUrl_() {
     local readonly url=$(getSourceUrl "$1")
     local readonly contentType="$(parseCsv "$1" 2)"
     local readonly content="$(parseCsv "$1" 3)"
@@ -15,7 +15,7 @@ testUrl() {
 
     assertStatusOk
     assertContentTypeExpected "$contentType"
-    verifyBodyContent "$content" "$contentType"
+    verifyBodyContent_ "$content" "$contentType"
 
     if [ -n "$cookieName" ]; then
         assertSetCookie "$cookieName="
@@ -24,20 +24,20 @@ testUrl() {
     runFunc "customAssertIntegrationHeaders" "$url" "$contentType"
 }
 
-verifyBodyContent() {
+verifyBodyContent_() {
     local readonly content="$1"
 
     if [ -n "$content" ]; then
         local readonly contentType="$2"
         if [ "$contentType" == "json" ]; then
-            verifyJsonAttribute "$content"
+            verifyJsonAttribute_ "$content"
         else
             assertBody "$content"
         fi
     fi
 }
 
-verifyJsonAttribute() {
+verifyJsonAttribute_() {
     local readonly content="$1"
     local readonly name="$(parseField "$content" 1 "#")"
     local readonly value="$(parseField "$content" 2 "#")"

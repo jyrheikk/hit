@@ -1,9 +1,9 @@
 #!/bin/bash
 # Test IFrame content.
 
-testMainPageContent() {
+testMainPageContent_() {
     local readonly url="$(parseCsv "$1" 1)"
-    local readonly content="$(parseCsv "$1" 2 | getPlainUrl)"
+    local readonly content="$(parseCsv "$1" 2 | getPlainUrl_)"
 
     httpGet "$url"
     assertStatusOk
@@ -11,11 +11,11 @@ testMainPageContent() {
     assertBody "$content"
 }
 
-getPlainUrl() {
+getPlainUrl_() {
     sed -e "s#https*:##" -e "s#\?.*##"
 }
 
-testIFrameContent() {
+testIFrameContent_() {
     local readonly url="$(parseCsv "$1" 2)"
     local readonly content="$(parseCsv "$1" 3)"
 
