@@ -18,6 +18,7 @@ _initRequest() {
     setCustomHeader ""
     setFollowRedirects 0
     setHost ""
+    setOrigin ""
     setPragma "$defaultPragma"
     setProxy "$defaultProxy"
     setReferer ""
@@ -77,6 +78,8 @@ setCacheControl() { req_cacheControl="$1"; }
 
 setHost() { req_host="$1"; }
 
+setOrigin() { req_origin="$1"; }
+
 setPragma() { req_pragma="$1"; }
 
 setReferer() { req_referer="$1"; }
@@ -110,6 +113,7 @@ _createRequestConfig() {
     _addRequestHeader "$REQ_CACHE_CONTROL" "$req_cacheControl"
     _addRequestHeader "$REQ_CONTENT_TYPE" "$req_contentType"
     _addRequestHeader "$REQ_HOST" "$req_host"
+    _addRequestHeader "$REQ_ORIGIN" "$req_origin"
     _addRequestHeader "$REQ_PRAGMA" "$req_pragma"
     _addRequestHeader "$REQ_REFERER" "$req_referer"
     _addRequestHeader "$REQ_USER_AGENT" "$req_userAgent"

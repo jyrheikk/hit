@@ -22,6 +22,7 @@ The last argument of the assert functions is an optional error message.
 * `setContentType`
 * `setCacheControl`
 * `setHost`
+* `setOrigin`
 * `setPragma`
 * `setReferer`
 * `setXForwardedFor`

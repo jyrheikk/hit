@@ -186,6 +186,7 @@ readonly -f setCredentials
 readonly -f setCustomHeader
 readonly -f setFollowRedirects
 readonly -f setHost
+readonly -f setOrigin
 readonly -f setPragma
 readonly -f setProxy
 readonly -f setReferer
