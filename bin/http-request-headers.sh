@@ -96,6 +96,8 @@ setAkamaiDebugHeaders() {
 }
 
 _createRequestConfig() {
+    echo "" > "$req_config"
+
     _addRequestParam "--silent"
     _addRequestParam "--connect-timeout $defaultConnectTimeout"
     _addRequestParam "--max-time $defaultMaxTime"

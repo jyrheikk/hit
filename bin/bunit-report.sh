@@ -26,13 +26,26 @@ _updateTestCounts() {
 }
 
 _reportResponse() {
-    if [[ -n "$optTrace" && -n "$currentUrl" && -s "$req_responseHeaders" ]]; then
-        echo "------------------------------------------------------------
-HTTP response headers of <$currentUrl>:
-"
-        cat "$req_responseHeaders"
-        echo "------------------------------------------------------------"
+    if [[ -z "$currentUrl" ]]; then
+        return
     fi
+
+    echo "------------------------------------------------------------"
+
+    if [[ -n "$optTrace" && -s "$req_responseHeaders" ]]; then
+        _reportTrace "HTTP response headers of <$currentUrl>" "$req_responseHeaders"
+    fi
+
+    if [[ -n "$optCurlTrace" && -s "$req_config" ]]; then
+        _reportTrace "curl parameters" "$req_config"
+    fi
+}
+
+_reportTrace() {
+    echo "$1:"
+    echo ""
+    cat "$2"
+    echo "------------------------------------------------------------"
 }
 
 _reportTime() {

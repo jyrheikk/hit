@@ -6,6 +6,8 @@
 
 readonly HIT_ARG_ASSERTIONS="-a"
 readonly HIT_ARG_ASSERTIONS_LONG="--assertions"
+readonly HIT_ARG_CURL_TRACE="-c"
+readonly HIT_ARG_CURL_TRACE_LONG="--curl"
 readonly HIT_ARG_DRY_RUN="-d"
 readonly HIT_ARG_DRY_RUN_LONG="--dry-run"
 readonly HIT_ARG_HELP="-h"
@@ -42,6 +44,8 @@ ARGS:
 
   $HIT_ARG_ASSERTIONS, $HIT_ARG_ASSERTIONS_LONG
 \tReports the number of assertions instead of tests (ok/failed/skipped)
+  $HIT_ARG_CURL_TRACE, $HIT_ARG_CURL_TRACE_LONG
+\tTraces curl parameters in case of errors
   $HIT_ARG_DRY_RUN, $HIT_ARG_DRY_RUN_LONG
 \tReports all test suites, tests cases and URLs that would be run
   $HIT_ARG_HELP, $HIT_ARG_HELP_LONG
@@ -55,7 +59,7 @@ ARGS:
   $HIT_ARG_SELF_TEST, $HIT_ARG_SELF_TEST_LONG
 \tRuns the self-test, to verify that the HIT framework works
   $HIT_ARG_TRACE, $HIT_ARG_TRACE_LONG
-\tTraces errors, by printing the HTTP response headers of failed assertions
+\tTraces HTTP response headers of failed assertions
   $HIT_ARG_URL URL, $HIT_ARG_URL_LONG URL
 \tTests only the URLs that match the given URL pattern (substring, regular expression)
   $HIT_ARG_WAIT SEC, $HIT_ARG_WAIT_LONG SEC
@@ -81,6 +85,9 @@ main() {
         case "$arg" in
             $HIT_ARG_ASSERTIONS | $HIT_ARG_ASSERTIONS_LONG)
                 reportResults="_reportAssertions"
+                ;;
+            $HIT_ARG_CURL_TRACE | $HIT_ARG_CURL_TRACE_LONG)
+                optCurlTrace=1
                 ;;
             $HIT_ARG_DRY_RUN | $HIT_ARG_DRY_RUN_LONG)
                 optDebugMode=1

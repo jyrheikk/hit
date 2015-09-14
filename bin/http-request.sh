@@ -54,6 +54,7 @@ httpGet() {
 
     _addTmpFile "$req_responseHeaders"
     _addTmpFile "$req_responseBody"
+    _addTmpFile "$req_config"
 }
 
 _skipUrl() {
@@ -112,7 +113,6 @@ _doRequest() {
         setHost "$host"
     fi
 
-    touch "$req_config"
     _createRequestConfig "$@"
 
     curl --config "$req_config"
@@ -123,6 +123,4 @@ _doRequest() {
     else
         _verifyCurlReturnCode "$curlStatus" "$url"
     fi
-
-    _removeFile "$req_config"
 }
