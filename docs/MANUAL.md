@@ -13,7 +13,7 @@
 | Argument | Description |
 | -------- | ----------- |
 | -a, &#8209;&#8209;assertions | Reports the number of assertions instead of tests (ok/failed/skipped) |
-| -c, &#8209;&#8209;curl | Traces curl parameters in case of errors; used for troubleshooting |
+| -c, &#8209;&#8209;curl | Traces curl parameters used in case of errors; used for troubleshooting (save the parameters in a file, and run `curl --config <filename>`) |
 | -d, &#8209;&#8209;dry-run | Lists all test suites, tests cases and URLs that _would_ be run; used for verifying a test suite |
 | -h, &#8209;&#8209;help | Shows this help for command-line arguments |
 | -p, &#8209;&#8209;production | Tests only against the production environment (skip regression); when set, calls the custom function [`customIsProductionUrl`](CODING.md) to check which domain names belong to the production environment |
