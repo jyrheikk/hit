@@ -1,4 +1,4 @@
-# DO NOT EDIT THIS AUTOMATICALLY GENERATED FILE
+# DO NOT EDIT THIS GENERATED FILE
 readonly -f _addRequestHeader
 readonly -f _addRequestHeaderValue
 readonly -f _addRequestParam
@@ -52,6 +52,7 @@ readonly -f _reportResponse
 readonly -f _reportSkipped
 readonly -f _reportTests
 readonly -f _reportTime
+readonly -f _reportTrace
 readonly -f _runParameterizedTestCases
 readonly -f _runScripts
 readonly -f _runTest

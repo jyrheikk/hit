@@ -1,3 +1,4 @@
+<!-- DO NOT EDIT THIS GENERATED FILE -->
 # HTTP Integration Tester API
 
 The last argument of the assert functions is an optional error message.

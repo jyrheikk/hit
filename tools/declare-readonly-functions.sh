@@ -11,7 +11,8 @@ main() {
 declareReadonlyFunctions() {
     local readonly FILENAME="$HIT_DIR/readonly-functions.sh"
 
-    echo "# DO NOT EDIT THIS AUTOMATICALLY GENERATED FILE" > "$FILENAME"
+    echo "Update $FILENAME..."
+    echo "# DO NOT EDIT THIS GENERATED FILE" > "$FILENAME"
     getFunctionNames | declareReadonly >> "$FILENAME"
     chmod 755 "$FILENAME"
 }

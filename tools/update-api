@@ -1,0 +1,18 @@
+#!/bin/bash
+
+main() {
+    declare-readonly-functions.sh
+    echo "Run self-tests..."
+    hit --selftest --quiet
+    updateApiDoc
+}
+
+updateApiDoc() {
+    local readonly DOC="../docs/API.md"
+
+    echo "Update $DOC..."
+    echo "<!-- DO NOT EDIT THIS GENERATED FILE -->" > "$DOC"
+    create-api-doc.sh md >> "$DOC"
+}
+
+main "$@"
