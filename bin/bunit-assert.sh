@@ -34,14 +34,14 @@ assertFileExists() {
     if [ -f "$filename" ]; then
         _okAssert
     else
-        _failAssert "File not found: $filename"
+        failAssert "File not found: $filename"
     fi
 }
 
 # Verify that the given variable is defined
 assertDefined() {
     if [ -z "$1" ]; then
-        _failAssert "$2"
+        failAssert "$2"
     else
         _okAssert
     fi
@@ -54,10 +54,11 @@ skipAndWarn() {
 }
 
 _failAssertExpected() {
-    _failAssert "expected <$1> but got <$2>; $3"
+    failAssert "expected <$1> but got <$2>; $3"
 }
 
-_failAssert() {
+# Fail the test with the given message
+failAssert() {
     if [ -z "$assertShouldFail" ]; then
         if [ -z "$currTestFailed" ]; then
             _reportMessage "Assert failed" "$1"

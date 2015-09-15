@@ -71,7 +71,7 @@ assertBodyEmpty() {
 
     if [ -s "$req_responseBody" ]; then
         local readonly message="$(_getCombinedMessage "response body not empty" "$message")"
-        _failAssert "$message"
+        failAssert "$message"
     else
         _okAssert
     fi

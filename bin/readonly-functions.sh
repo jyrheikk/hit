@@ -14,7 +14,6 @@ readonly -f _excludeCommentEmptyLines
 readonly -f _expectAssertFailure
 readonly -f _expectCurlError
 readonly -f _expectCurlOk
-readonly -f _failAssert
 readonly -f _failAssertExpected
 readonly -f _failTest
 readonly -f _getBodyValue
@@ -151,6 +150,7 @@ readonly -f assertXTrueCacheKey
 readonly -f assertXVarnish
 readonly -f assertXVarnishCache
 readonly -f doSleep
+readonly -f failAssert
 readonly -f getCookie
 readonly -f getDestinationStatus
 readonly -f getDestinationUrl

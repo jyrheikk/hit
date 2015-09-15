@@ -24,24 +24,24 @@ tearDownAfterClass() {
 
 testIsExecutable() {
     local readonly THIS_SCRIPT="test-bunit-runner.sh"
-    [ "$(_isExecutable $THIS_SCRIPT)" ] || _failAssert $THIS_SCRIPT
+    [ "$(_isExecutable $THIS_SCRIPT)" ] || failAssert $THIS_SCRIPT
     assertInTestCase
 }
 
 testIsNotExecutable() {
     local readonly TEST_FILE="$testDataDir/response-body.html"
-    _isExecutable "$TEST_FILE" && _failAssert "$TEST_FILE"
+    _isExecutable "$TEST_FILE" && failAssert "$TEST_FILE"
     assertInTestCase
 }
 
 testIsFunction() {
     local readonly EXISTING="assertTrue"
-    isFunction $EXISTING || _failAssert $EXISTING
+    isFunction $EXISTING || failAssert $EXISTING
 }
 
 testIsNotFunction() {
     local readonly NON_EXISTING="someNonExistingFunction"
-    isFunction $NON_EXISTING && _failAssert $NON_EXISTING
+    isFunction $NON_EXISTING && failAssert $NON_EXISTING
 }
 
 assertInTestCase() {
@@ -51,9 +51,9 @@ assertInTestCase() {
 }
 
 TESTCaseNot() {
-    _failAssert "invalid test case: TESTCaseNot"
+    failAssert "invalid test case: TESTCaseNot"
 }
 
 _testCaseNot() {
-    _failAssert "invalid test case: _testCaseNot"
+    failAssert "invalid test case: _testCaseNot"
 }

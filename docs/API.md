@@ -176,6 +176,8 @@ The last argument of the assert functions is an optional error message.
   * Verify that the given variable is defined
 * `skipAndWarn`
   * Skip the test with the given warning message
+* `failAssert`
+  * Fail the test with the given message
 
 ## String utilities
 * `parseCsv`

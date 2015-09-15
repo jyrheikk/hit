@@ -139,7 +139,7 @@ _verifyValueIn() {
 
     local readonly ok=$((value >= min && value <= max))
     if [ "$ok" != 1 ]; then
-        _failAssert "$header: $value, expected $min..$max; $currentUrl"
+        failAssert "$header: $value, expected $min..$max; $currentUrl"
     fi
 }
 
