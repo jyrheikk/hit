@@ -116,7 +116,7 @@ _runTest() {
     _reportProgress
     runFunc setUp
     currTestFailed=
-    _doDebug "- $1"
+    _doDebug "- $1 $2"
     $1 "$2"
     _updateTestCounts
     runFunc tearDown
