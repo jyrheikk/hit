@@ -71,6 +71,7 @@ The last argument of the assert functions is an optional error message.
 
 ## Verify Content-Type response header
 * `assertType3gp`
+* `assertTypeAac`
 * `assertTypeAvi`
 * `assertTypeCss`
 * `assertTypeFlash`
@@ -80,6 +81,7 @@ The last argument of the assert functions is an optional error message.
 * `assertTypeJpeg`
 * `assertTypeJson`
 * `assertTypeMp4`
+* `assertTypeMpeg`
 * `assertTypeOctetStream`
 * `assertTypePdf`
 * `assertTypePng`

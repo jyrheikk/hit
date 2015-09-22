@@ -39,6 +39,7 @@ assertCacheControlPublic() { assertCacheControl "$PUBLIC" "$1"; }
 ## Verify Content-Type response header
 
 assertType3gp() { assertContentType "$CONTENT_TYPE_3GP" "$1"; }
+assertTypeAac() { assertContentType "$CONTENT_TYPE_AAC" "$1"; }
 assertTypeAvi() { assertContentType "$CONTENT_TYPE_AVI" "$1"; }
 assertTypeCss() { assertContentType "$CONTENT_TYPE_CSS" "$1"; }
 assertTypeFlash() { assertContentType "($CONTENT_TYPE_FLASH|$CONTENT_TYPE_APPLICATION_FLASH)" "$1"; }
@@ -48,6 +49,7 @@ assertTypeJavaScript() { assertContentType "($CONTENT_TYPE_APPLICATION_JAVASCRIP
 assertTypeJpeg() { assertContentType "$CONTENT_TYPE_JPEG" "$1"; }
 assertTypeJson() { assertContentType "$CONTENT_TYPE_JSON" "$1"; }
 assertTypeMp4() { assertContentType "$CONTENT_TYPE_MP4" "$1"; }
+assertTypeMpeg() { assertContentType "$CONTENT_TYPE_MPEG" "$1"; }
 assertTypeOctetStream() { assertContentType "$CONTENT_TYPE_APPLICATION_OCTET_STREAM" "$1"; }
 assertTypePdf() { assertContentType "$CONTENT_TYPE_PDF" "$1"; }
 assertTypePng() { assertContentType "$CONTENT_TYPE_PNG" "$1"; }
@@ -62,6 +64,9 @@ assertTypeXml() { assertContentType "($CONTENT_TYPE_APPLICATION_XML|$CONTENT_TYP
 # @param file type (css, gif, js, json, png, txt, xml), default is "html"
 assertContentTypeExpected() {
     case "$1" in
+        aac)
+            assertTypeAac "$2"
+            ;;
         avi)
             assertTypeAvi "$2"
             ;;
@@ -80,7 +85,7 @@ assertContentTypeExpected() {
         js)
             assertTypeJavaScript "$2"
             ;;
-        jpeg)
+        jpeg | jpg)
             assertTypeJpeg "$2"
             ;;
         json)
@@ -92,6 +97,9 @@ assertContentTypeExpected() {
         mp4)
             assertTypeMp4 "$2"
             ;;
+        mp3 | mpeg)
+            assertTypeMpeg "$2"
+            ;;
         octet)
             assertTypeOctetStream "$2"
             ;;
@@ -101,7 +109,7 @@ assertContentTypeExpected() {
         png)
             assertTypePng "$2"
             ;;
-        txt)
+        text | txt)
             assertTypeText "$2"
             ;;
         webm)

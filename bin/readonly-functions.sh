@@ -40,6 +40,7 @@ readonly -f _matches
 readonly -f _okAssert
 readonly -f _parseStatus
 readonly -f _printArgError
+readonly -f _printDelim
 readonly -f _printError
 readonly -f _removeCRLF
 readonly -f _removeFile
@@ -127,6 +128,7 @@ readonly -f assertStatusUnauthorized
 readonly -f assertStrictTransportSecurity
 readonly -f assertTrue
 readonly -f assertType3gp
+readonly -f assertTypeAac
 readonly -f assertTypeAvi
 readonly -f assertTypeCss
 readonly -f assertTypeFlash
@@ -136,6 +138,7 @@ readonly -f assertTypeJavaScript
 readonly -f assertTypeJpeg
 readonly -f assertTypeJson
 readonly -f assertTypeMp4
+readonly -f assertTypeMpeg
 readonly -f assertTypeOctetStream
 readonly -f assertTypePdf
 readonly -f assertTypePng

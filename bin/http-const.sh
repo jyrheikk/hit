@@ -42,6 +42,7 @@ readonly PRAGMA_AKAMAI_DEBUG_HEADERS="akamai-x-cache-on, akamai-x-cache-remote-o
 
 # Content-Type values
 readonly CONTENT_TYPE_3GP="video/3gpp"
+readonly CONTENT_TYPE_AAC="audio/x-aac"
 readonly CONTENT_TYPE_APPLICATION_FLASH="flv-application/octet-stream"
 readonly CONTENT_TYPE_APPLICATION_JAVASCRIPT="application/javascript"
 readonly CONTENT_TYPE_APPLICATION_OCTET_STREAM="application/octet-stream"
@@ -56,6 +57,7 @@ readonly CONTENT_TYPE_HTML="text/html"
 readonly CONTENT_TYPE_JAVASCRIPT="text/javascript"
 readonly CONTENT_TYPE_JPEG="image/jpeg"
 readonly CONTENT_TYPE_JSON="application/json"
+readonly CONTENT_TYPE_MPEG="audio/mpeg"
 readonly CONTENT_TYPE_MP4="video/mp4"
 readonly CONTENT_TYPE_PDF="application/pdf"
 readonly CONTENT_TYPE_PNG="image/png"

@@ -30,13 +30,14 @@ _reportResponse() {
         return
     fi
 
-    echo "------------------------------------------------------------"
-
     if [[ -n "$optTrace" && -s "$req_responseHeaders" ]]; then
+        _printDelim
         _reportTrace "HTTP response headers of <$currentUrl>" "$req_responseHeaders"
+        local skipDelim=1
     fi
 
     if [[ -n "$optCurlTrace" && -s "$req_config" ]]; then
+        [[ -z "skipDelim" ]] && _printDelim
         _reportTrace "curl parameters" "$req_config"
     fi
 }
@@ -45,7 +46,11 @@ _reportTrace() {
     echo "$1:"
     echo ""
     cat "$2"
-    echo "------------------------------------------------------------"
+    _printDelim
+}
+
+_printDelim() {
+    echo "--"
 }
 
 _reportTime() {
