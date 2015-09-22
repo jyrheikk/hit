@@ -23,6 +23,7 @@ readonly -f _getNumberFromAfter
 readonly -f _getNumberValueOfHeader
 readonly -f _getParamFile
 readonly -f _getValue
+readonly -f _getValueOfString
 readonly -f _hasResponseBody
 readonly -f _headerFound
 readonly -f _headerMatches
@@ -38,6 +39,8 @@ readonly -f _isSiteDown
 readonly -f _matches
 readonly -f _okAssert
 readonly -f _parseStatus
+readonly -f _printArgError
+readonly -f _printError
 readonly -f _removeCRLF
 readonly -f _removeFile
 readonly -f _removeTmpFiles
