@@ -77,9 +77,7 @@ http_proxy= $thisScript" 1>&2
 main() {
     declare -a testScripts=()
     local reportResults="_reportTests"
-    local optUrl=
-    local optWait=
-    local waitingInputFile=
+    local prev=
 
     for arg in $@; do
         case "$arg" in
@@ -98,7 +96,7 @@ main() {
                 _usage
                 ;;
             $HIT_ARG_INPUT | $HIT_ARG_INPUT_LONG)
-                waitingInputFile=1
+                local expectingInput=1
                 testScripts=("${testScripts[@]}" "$arg")
                 ;;
             $HIT_ARG_PRODUCTION | $HIT_ARG_PRODUCTION_LONG)
@@ -117,45 +115,36 @@ main() {
                 optTrace=1
                 ;;
             $HIT_ARG_URL | $HIT_ARG_URL_LONG)
-                optUrl=1
+                local expectingUrl=1
                 ;;
             $HIT_ARG_WAIT | $HIT_ARG_WAIT_LONG)
-                optWait=1
+                local expectingWaitTime=1
                 ;;
             *)
-                if [ -n "$optUrl" ]; then
+                if [[ "$prev" == "$HIT_ARG_URL" || "$prev" == "$HIT_ARG_URL_LONG" ]]; then
                     optIncludeUrl="$arg"
-                    optUrl=
-                elif [ -n "$optWait" ]; then
+                    expectingUrl=
+                elif [[ "$prev" == "$HIT_ARG_WAIT" || "$prev" == "$HIT_ARG_WAIT_LONG" ]]; then
                     optSleepInSec="$arg"
-                    optWait=
+                    expectingWaitTime=
                 elif [[ ${arg:0:1} == "-" ]]; then
-                    echo -e "ERROR: Unknown argument: $arg\n"
-                    _usage
+                    _printError "Unknown argument: $arg"
                 else
-                    if [ -n "$waitingInputFile" ]; then
-                        waitingInputFile=
+                    if [[ "$prev" == "$HIT_ARG_INPUT" || "$prev" == "$HIT_ARG_INPUT_LONG" ]]; then
+                        expectingInput=
                     fi
                     testScripts=("${testScripts[@]}" "$arg")
                 fi
                 ;;
         esac
+
+        local prev="$arg"
         shift
     done
 
-    if [ -n "$optUrl" ]; then
-        echo -e "ERROR: Give the URL after the argument $HIT_ARG_URL \
-($HIT_ARG_URL_LONG)\n"
-        _usage
-    elif [ -n "$optWait" ]; then
-        echo -e "ERROR: Give the wait time in seconds after the argument \
-$HIT_ARG_WAIT ($HIT_ARG_WAIT_LONG)\n"
-        _usage
-    elif [ -n "$waitingInputFile" ]; then
-        echo -e "ERROR: Give the name of the test data input file after the \
-argument $HIT_ARG_INPUT ($HIT_ARG_INPUT_LONG)\n"
-        _usage
-    fi
+    [[ -n "$expectingInput" ]] && _printArgError "test data input file name" "INPUT"
+    [[ -n "$expectingUrl" ]] && _printArgError "URL" "URL"
+    [[ -n "$expectingWaitTime" ]] && _printArgError "wait time in seconds" "WAIT"
 
     # the HIT path must be accessible
     readonly hitPath=$(echo $0 | sed "s/\/[^/]*$//")
@@ -175,6 +164,23 @@ argument $HIT_ARG_INPUT ($HIT_ARG_INPUT_LONG)\n"
     _runScripts "${testScripts[@]}"
     _reportTime
     $reportResults
+}
+
+_printArgError() {
+    local readonly name="$2"
+    local readonly shortArg="$(_getValueOfString "HIT_ARG_${name}")"
+    local readonly longArg="$(_getValueOfString "HIT_ARG_${name}_LONG")"
+
+    _printError "Give $1 after the argument $shortArg ($longArg)"
+}
+
+_printError() {
+    echo -e "ERROR: $1\n"
+    _usage
+}
+
+_getValueOfString() {
+    echo "${!1}"
 }
 
 _includeHit() {
