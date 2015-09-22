@@ -69,6 +69,16 @@ The last argument of the assert functions is an optional error message.
 * `assertCacheControlPrivate`
 * `assertCacheControlPublic`
 
+## Verify miscellaneous response headers
+* `assertNoClickjacking`
+  * Verify that clickjacking is not allowed (X-Frame-Options: SAMEORIGIN)
+* `assertCorsEnabled`
+  * Verify that Cross Origin Resource Sharing (CORS) is enabled
+* `assertCompressed`
+  * Verify that the response is compressed (Accept-Encoding and Vary headers)
+* `assertVarnishUsed`
+  * Verify that Varnish is used (X-Varnish-Cache: HIT or MISS)
+
 ## Verify Content-Type response header
 * `assertType3gp`
 * `assertTypeAac`
@@ -90,18 +100,8 @@ The last argument of the assert functions is an optional error message.
 * `assertTypeWebM`
 * `assertTypeWindowsMedia`
 * `assertTypeXml`
-
-## Verify miscellaneous response headers
 * `assertContentTypeExpected`
   * Parameters: file type (css, gif, js, json, png, txt, xml), default is "html"
-* `assertNoClickjacking`
-  * Verify that clickjacking is not allowed (X-Frame-Options: SAMEORIGIN)
-* `assertCorsEnabled`
-  * Verify that Cross Origin Resource Sharing (CORS) is enabled
-* `assertCompressed`
-  * Verify that the response is compressed (Accept-Encoding and Vary headers)
-* `assertVarnishUsed`
-  * Verify that Varnish is used (X-Varnish-Cache: HIT or MISS)
 
 ## Verify HTTP status code
 * `assertStatusOk`

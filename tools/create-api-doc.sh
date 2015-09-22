@@ -56,6 +56,8 @@ createContents() {
         $HIT_DIR/http-request-headers.sh \
         $HIT_DIR/http-request.sh \
         $HIT_DIR/http-assert-headers.sh \
+        $HIT_DIR/http-assert-content-type.sh \
+        $HIT_DIR/http-assert-status.sh \
         $HIT_DIR/http-assert.sh \
         $HIT_DIR/http-assert-body.sh \
         $HIT_DIR/bunit-assert.sh \

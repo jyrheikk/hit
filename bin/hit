@@ -192,6 +192,8 @@ _includeHit() {
     source http-assert.sh
     source http-assert-body.sh
     source http-assert-headers.sh
+    source http-assert-content-type.sh
+    source http-assert-status.sh
     source http-request.sh
     source readonly-functions.sh
 }
