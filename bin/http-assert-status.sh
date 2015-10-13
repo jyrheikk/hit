@@ -7,6 +7,10 @@
 assertStatusOk() { _verifyStatus "$statusOk" "$1"; }
 # Verify that the status code is 201
 assertStatusCreated() { _verifyStatus "$statusCreated" "$1"; }
+# Verify that the status code is 202
+assertStatusAccepted() { _verifyStatus "$statusAccepted" "$1"; }
+# Verify that the status code is 204
+assertStatusNoContent() { _verifyStatus "$statusNoContent" "$1"; }
 # Verify that the status code is 301 or 302
 assertStatusRedirect() { _verifyStatus "($statusMovedPermanently|$statusMovedTemporarily|$statusFound|$statusObjectMoved)" "$1"; }
 # Verify that the status code is 301
@@ -45,6 +49,12 @@ assertStatusCodeExpected() {
             ;;
         "201")
             assertStatusCreated "$message"
+            ;;
+        "202")
+            assertStatusAccepted "$message"
+            ;;
+        "204")
+            assertStatusNoContent "$message"
             ;;
         "301")
             assertStatusMovedPermanently "$message"

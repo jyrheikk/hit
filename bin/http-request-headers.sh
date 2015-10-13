@@ -148,7 +148,7 @@ _createRequestConfig() {
     fi
 
     if [ "$(_isHttpMethod "$2")" ]; then
-        _addRequestParam "-X $2"
+        _addRequestParam "--request $2"
         if [ -n "$3" ]; then
             _addRequestParam "--data $3"
         fi
@@ -176,7 +176,8 @@ _addRequestParam() {
 
 _isHttpMethod() {
     case "$1" in
-        "$REQ_METHOD_DELETE" | "$REQ_METHOD_OPTIONS" | "$REQ_METHOD_PUT" | "$REQ_METHOD_TRACE")
+        "$REQ_METHOD_DELETE" | "$REQ_METHOD_OPTIONS" | "$REQ_METHOD_POST" \
+            | "$REQ_METHOD_PUT" | "$REQ_METHOD_TRACE")
             echo 1
             ;;
     esac

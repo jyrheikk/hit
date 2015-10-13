@@ -111,6 +111,7 @@ readonly -f assertNotCacheable
 readonly -f assertPragma
 readonly -f assertServer
 readonly -f assertSetCookie
+readonly -f assertStatusAccepted
 readonly -f assertStatusBadRequest
 readonly -f assertStatusCodeExpected
 readonly -f assertStatusCreated
@@ -118,6 +119,7 @@ readonly -f assertStatusForbidden
 readonly -f assertStatusMethodNotAllowed
 readonly -f assertStatusMovedPermanently
 readonly -f assertStatusMovedTemporarily
+readonly -f assertStatusNoContent
 readonly -f assertStatusNotFound
 readonly -f assertStatusNotImplemented
 readonly -f assertStatusOk

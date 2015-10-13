@@ -108,6 +108,10 @@ The last argument of the assert functions is an optional error message.
   * Verify that the status code is 200
 * `assertStatusCreated`
   * Verify that the status code is 201
+* `assertStatusAccepted`
+  * Verify that the status code is 202
+* `assertStatusNoContent`
+  * Verify that the status code is 204
 * `assertStatusRedirect`
   * Verify that the status code is 301 or 302
 * `assertStatusMovedPermanently`

@@ -42,7 +42,7 @@ readonly PRAGMA_AKAMAI_DEBUG_HEADERS="akamai-x-cache-on, akamai-x-cache-remote-o
 
 # Content-Type values
 readonly CONTENT_TYPE_3GP="video/3gpp"
-readonly CONTENT_TYPE_AAC="audio/x-aac"
+readonly CONTENT_TYPE_AAC="audio/aac"
 readonly CONTENT_TYPE_APPLICATION_FLASH="flv-application/octet-stream"
 readonly CONTENT_TYPE_APPLICATION_JAVASCRIPT="application/javascript"
 readonly CONTENT_TYPE_APPLICATION_OCTET_STREAM="application/octet-stream"
@@ -81,6 +81,8 @@ readonly REQ_METHOD_TRACE="TRACE"
 readonly statusOk="200 OK"
 readonly statusConnectionEstablished="200 Connection established"
 readonly statusCreated="201 Created"
+readonly statusAccepted="202 Accepted"
+readonly statusNoContent="204 No Content"
 readonly statusMovedPermanently="301 Moved Permanently"
 # 302 has several definitions
 readonly statusMovedTemporarily="302 Moved Temporarily"
