@@ -146,9 +146,7 @@ main() {
     [[ -n "$expectingUrl" ]] && _printArgError "URL" "URL"
     [[ -n "$expectingWaitTime" ]] && _printArgError "wait time in seconds" "WAIT"
 
-    # the HIT path must be accessible
-    readonly hitPath=$(echo $0 | sed "s/\/[^/]*$//")
-    PATH=$PATH:$hitPath
+    local readonly hitPath="$(dirname "$0")"
 
     _includeHit
 
