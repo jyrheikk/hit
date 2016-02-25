@@ -20,7 +20,17 @@ testSuiteName() {
 formatReport() {
     local readonly prefixes="^(test|# Test)"
 
-    egrep "$prefixes" "$1"/test*.sh | cleanFunctionNames | sed "s/:/@/" | awk -F@ -f test-suite-report.awk
+    egrep "$prefixes" "$1"/test*.sh \
+        | cleanFunctionNames \
+        | sed "s/:/@/" \
+        | commonFormat
+}
+
+commonFormat() {
+    local readonly SCRIPT="$(readlink -f "$0")"
+    local readonly SCRIPT_PATH="$(dirname "$SCRIPT")"
+
+    awk -F@ -f "$SCRIPT_PATH/test-suite-report.awk"
 }
 
 cleanFunctionNames() {

@@ -2,6 +2,9 @@
 # Report test cases in HTML.
 
 main() {
+    local readonly SCRIPT="$(readlink -f "$0")"
+    local readonly SCRIPT_PATH="$(dirname "$SCRIPT")"
+
     local readonly HTTP_PROTOCOL="https?://"
 
     if [[ $(matchesRegExp "$1" "$HTTP_PROTOCOL") -eq 1 ]]; then
@@ -13,7 +16,7 @@ main() {
     echo "<title>$name</title>"
     echo "<h1>$name</h1>"
 
-    ./create-test-suite-report.sh "$@" \
+    $SCRIPT_PATH/create-test-suite-report.sh "$@" \
         | testSuiteName2Heading \
         | filename2Link "$sourceCodeUrl" \
         | description2Html \
@@ -30,13 +33,13 @@ testSuiteName2Heading() {
 }
 
 filename2Link() {
-    local readonly testSuiteDir="\.\.\/[ \.\/]*[^/]*\/"
     local readonly sourceCodeUrl="$1"
+    local readonly filename="\([^ ]*\.sh\)"
 
     if [ -z "$sourceCodeUrl" ]; then
-        sed "s# *$testSuiteDir\(.*\)#<b>\1</b>#"
+        sed "s#^ *$filename\$#<b>\1</b>#"
     else
-        sed "s# *$testSuiteDir\(.*\)#<b><a href=\"$sourceCodeUrl\1\">\1</a></b>#"
+        sed "s#^ *$filename\$#<b><a href=\"$sourceCodeUrl\1\">\1</a></b>#"
     fi
 }
 
