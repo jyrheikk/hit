@@ -79,6 +79,8 @@ the GitHub home page:
         assertBody "GitHub"
     }
 
+See more [test case examples](/example-tests/).
+
 ## Installing HIT
 
 Clone the Git repository, and verify that you have the tools required by HIT:

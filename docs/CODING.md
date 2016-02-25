@@ -65,8 +65,9 @@ the custom functions described above.
 * Avoid common [unit test
   antipatterns](http://www.exubero.com/junit/antipatterns.html), such
   as Redundant Assertions and Only Happy Path Tests.
-* Don't Repeat Yourself (DRY). Instead of copy-pasting, encapsulate
-  common code in reusable functions and put them in the `common*.sh` files.
+* Don't Repeat Yourself (DRY). Instead of copy-pasting, encapsulate reusable code.
+  * Common test class code (e.g., setting the same HTTP request headers) in the `setUp` function.
+  * Common test suite code as utilities in the `common*.sh` files.
 * Use the HIT [test class templates](TEMPLATES.md).
 
 ## Code formatting
