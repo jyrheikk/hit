@@ -12,7 +12,7 @@ assertTypeGif() { assertContentType "$CONTENT_TYPE_GIF" "$1"; }
 assertTypeHtml() { assertContentType "$CONTENT_TYPE_HTML" "$1"; }
 assertTypeJavaScript() { assertContentType "($CONTENT_TYPE_APPLICATION_JAVASCRIPT|$CONTENT_TYPE_APPLICATION_X_JAVASCRIPT|$CONTENT_TYPE_JAVASCRIPT)" "$1"; }
 assertTypeJpeg() { assertContentType "$CONTENT_TYPE_JPEG" "$1"; }
-assertTypeJson() { assertContentType "$CONTENT_TYPE_JSON" "$1"; }
+assertTypeJson() { assertContentType "($CONTENT_TYPE_APPLICATION_JSON|$CONTENT_TYPE_JSON)" "$1"; }
 assertTypeMp4() { assertContentType "$CONTENT_TYPE_MP4" "$1"; }
 assertTypeMpeg() { assertContentType "$CONTENT_TYPE_MPEG" "$1"; }
 assertTypeOctetStream() { assertContentType "$CONTENT_TYPE_APPLICATION_OCTET_STREAM" "$1"; }

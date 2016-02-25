@@ -168,6 +168,7 @@ The last argument of the assert functions is an optional error message.
 * `assertJson`
   * Verify that the response body contains the given JSON attribute (parameter 1: attribute name, parameter 2: attribute value)
 * `getJsonValueFromBody`
+  * Parameters: JSON attribute name
 
 ## Basic assertions
 * `assertTrue`

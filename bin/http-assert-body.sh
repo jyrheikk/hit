@@ -83,6 +83,7 @@ assertJson() {
     assertEquals "$2" "$value"
 }
 
+# @param JSON attribute name
 getJsonValueFromBody() { 
     local readonly json="$(_removeCRLF 2> /dev/null < "$req_responseBody")"
     getJsonValue "$json" "$1"
