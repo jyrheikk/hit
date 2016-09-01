@@ -16,7 +16,7 @@ main() {
     echo "<title>$name</title>"
     echo "<h1>$name</h1>"
 
-    $SCRIPT_PATH/create-test-suite-report.sh "$@" \
+    "$SCRIPT_PATH"/create-test-suite-report.sh "$@" \
         | testSuiteName2Heading \
         | filename2Link "$sourceCodeUrl" \
         | description2Html \

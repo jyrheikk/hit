@@ -1,3 +1,4 @@
+#!/bin/bash
 # DO NOT EDIT THIS GENERATED FILE
 readonly -f _addRequestHeader
 readonly -f _addRequestHeaderValue
