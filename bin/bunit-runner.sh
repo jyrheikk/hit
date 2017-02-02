@@ -58,7 +58,7 @@ _getParamFile() {
 }
 
 _runParameterizedTestCases() {
-    trap removeTmpFiles SIGHUP SIGINT SIGPIPE SIGTERM
+    trap _removeTmpFiles SIGHUP SIGINT SIGPIPE SIGTERM
     allTestCases=($(compgen -A function "$TEST_CASE_PREFIX"))
 
     runFunc setUpBeforeClass
